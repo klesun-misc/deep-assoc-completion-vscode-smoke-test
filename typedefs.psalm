@@ -1,0 +1,7 @@
+
+type SomeArr = array{
+
+};
+
+type NumOrStr = string | number;
+

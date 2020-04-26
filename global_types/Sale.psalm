@@ -1,0 +1,18 @@
+
+
+template T as string
+
+type Sale<T> = array{
+    key1: T,
+};
+
+type Passenger<T> = array{
+    key1: T,
+};
+
+type DeepStructure = {
+    records: array<array{
+        name: string,
+        passengers: array<Passenger>,
+    }>
+};
