@@ -1,0 +1,18 @@
+parameters:
+  level: 7
+  typeAliases:
+    SomePurchase: '''
+      array{
+        id: int,
+        amount: float,
+        currency: string,
+        product: string,
+      }
+    '''
+    PurchaseList: '''
+      array{
+        customerName: string,
+        lastUpdateDt: \DateTime,
+        items: array<SomePurchase>,
+      }
+    '''

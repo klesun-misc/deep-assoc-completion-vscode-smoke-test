@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "psr-4": {"": "src"},
+        "files": []
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12.23",
+        "phan/phan": "2.x",
+        "vimeo/psalm": "^3.11"
+    }
+}
