@@ -1,14 +1,43 @@
 {
-	"name": "deep-assoc-lsp-tests",
-	"version": "0.1.0",
-	"author": {
-		"name": "Artur Klesun",
-		"email": "safronevev@gmail.com",
-		"url": "https://klesun-productions.com/"
-	},
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/klesun-misc/deep-assoc-lsp-tests"
-	}
+  "_from": "git+https://github.com/klesun-misc/deep-assoc-lsp-tests.git#master",
+  "_id": "deep-assoc-lsp-tests@0.1.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/deep-assoc-lsp-tests",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "deep-assoc-lsp-tests@git+https://github.com/klesun-misc/deep-assoc-lsp-tests.git#master",
+    "name": "deep-assoc-lsp-tests",
+    "escapedName": "deep-assoc-lsp-tests",
+    "rawSpec": "git+https://github.com/klesun-misc/deep-assoc-lsp-tests.git#master",
+    "saveSpec": "git+https://github.com/klesun-misc/deep-assoc-lsp-tests.git#master",
+    "fetchSpec": "https://github.com/klesun-misc/deep-assoc-lsp-tests.git",
+    "gitCommittish": "master"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "git+https://github.com/klesun-misc/deep-assoc-lsp-tests.git#64fa1180d66f4eb1a3b6ab1ee29d09e6afb113f4",
+  "_spec": "deep-assoc-lsp-tests@git+https://github.com/klesun-misc/deep-assoc-lsp-tests.git#master",
+  "_where": "C:\\gits\\deep-assoc-completion-vscode",
+  "author": {
+    "name": "Artur Klesun",
+    "email": "safronevev@gmail.com",
+    "url": "https://klesun-productions.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/klesun-misc/deep-assoc-lsp-tests/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "This repo holds php files with various corner cases for deep-assoc-completion unit tests",
+  "homepage": "https://github.com/klesun-misc/deep-assoc-lsp-tests#readme",
+  "license": "MIT",
+  "name": "deep-assoc-lsp-tests",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klesun-misc/deep-assoc-lsp-tests.git"
+  },
+  "version": "0.1.0"
 }

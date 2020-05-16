@@ -8,19 +8,16 @@ use RbsVer\Parsers\Sabre\Pricing\PqParserUnshiftOverflow;
 use TestSamples\CmsSessionMemoryOverflow\CmsStatefulSession;
 use TouhouNs\ReimuHakurei;
 use TouhouNs\YakumoRan;
+use DeepTest\TestData;
 
-
-/**
- * TODO: make somehow possible to say that array
- * must have _only_ the keys from the expected output
- */
 class UnitTest implements IProcessPntQueueAction /** extends \PHPUnit_Framework_Suite */
 {
     public static function provideSimpleTest()
     {
         $list = [];
-
+        
         // from function
+        TestData::makeStudentRecord()[''];
         $list[] = [
             TestData::makeStudentRecord(),
             ['id' => [], 'firstName' => [], 'lastName' => [], 'year' => [], 'faculty' => [], 'chosenSubSubjects' => []],
@@ -28,6 +25,7 @@ class UnitTest implements IProcessPntQueueAction /** extends \PHPUnit_Framework_
 
         // from var
         $denya = TestData::makeStudentRecord();
+        $denya[''];
         $list[] = [
             $denya,
             ['id' => [], 'firstName' => [], 'lastName' => [], 'year' => [], 'faculty' => [], 'chosenSubSubjects' => []],

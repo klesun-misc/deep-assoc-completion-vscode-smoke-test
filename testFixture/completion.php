@@ -14,3 +14,7 @@ function test_shapeDoc($pony) {
     //    \/ should suggest: element, name, color
     $pony[''];
 }
+
+//                                      \/ should suggest: id, firstName, lastName, year, faculty, pass, chosenSubSubjects
+\DeepTest\TestData::makeStudentRecord()[''];
+
