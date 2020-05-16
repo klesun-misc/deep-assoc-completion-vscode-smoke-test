@@ -1,0 +1,14 @@
+{
+	"name": "deep-assoc-lsp-tests",
+	"version": "0.1.0",
+	"author": {
+		"name": "Artur Klesun",
+		"email": "safronevev@gmail.com",
+		"url": "https://klesun-productions.com/"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/klesun-misc/deep-assoc-lsp-tests"
+	}
+}
