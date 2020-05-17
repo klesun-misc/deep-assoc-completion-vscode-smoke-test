@@ -15,21 +15,8 @@ class UnitTest implements IProcessPntQueueAction /** extends \PHPUnit_Framework_
     public static function provideSimpleTest()
     {
         $list = [];
-        
-        // from function
-        TestData::makeStudentRecord()[''];
-        $list[] = [
-            TestData::makeStudentRecord(),
-            ['id' => [], 'firstName' => [], 'lastName' => [], 'year' => [], 'faculty' => [], 'chosenSubSubjects' => []],
-        ];
 
-        // from var
         $denya = TestData::makeStudentRecord();
-        $denya[''];
-        $list[] = [
-            $denya,
-            ['id' => [], 'firstName' => [], 'lastName' => [], 'year' => [], 'faculty' => [], 'chosenSubSubjects' => []],
-        ];
 
         // from inner key
         $list[] = [
