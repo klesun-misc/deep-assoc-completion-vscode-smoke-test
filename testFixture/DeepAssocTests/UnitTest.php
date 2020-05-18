@@ -59,4 +59,19 @@ class UnitTest
         //           \/ should suggest: from, to
         $segments[0][''];
     }
+
+    private static function test_strEq()
+    {
+        $i = rand(0, 3);
+        $types = ['AIR', 'CAR', 'HOTEL', 'RAIL'];
+        $type = $types[$i];
+        //           \/ should suggest: AIR, CAR, HOTEL, RAIL
+        if ($type == '') {
+
+        }
+        //                              \/ should suggest: AIR, CAR, HOTEL, RAIL
+        if ((   $types[$i] ?? null) === '') {
+
+        }
+    }
 }

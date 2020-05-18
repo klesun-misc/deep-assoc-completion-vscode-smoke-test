@@ -71,9 +71,7 @@ class DeepKeysTest
         $i = rand(0, 3);
         $types = ['AIR', 'CAR', 'HOTEL', 'RAIL'];
         $type = $types[$i];
-        if ($type === '') {
 
-        }
         if (in_array($type, ['CAR', ''])) {
 
         }
@@ -81,9 +79,6 @@ class DeepKeysTest
 
         }
         if (array_intersect([''], $types, ['ASD'])) {
-
-        }
-        if (($types[$i] ?? null) === '') {
 
         }
     }
