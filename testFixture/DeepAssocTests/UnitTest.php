@@ -22,6 +22,13 @@ function test_shapeDoc($pony) {
 //                                      \/ should suggest: id, firstName, lastName, year, faculty, pass, chosenSubSubjects
 \DeepTest\TestData::makeStudentRecord()[''];
 
+/**
+ * @psalm-import-type  FileMapType from \Psalm\Internal\Codebase\Analyzer
+ *
+ * \/ should suggest: psalm-type, psalm-import-type
+ * @
+ */
+
 /** keys subset unit tests */
 class UnitTest
 {
