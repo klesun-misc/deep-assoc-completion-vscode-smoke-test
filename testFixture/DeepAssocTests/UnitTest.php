@@ -81,4 +81,50 @@ class UnitTest
 
         }
     }
+
+    /** @param array{goreAmount: float, name: string, author: string} $mlpFanfic */
+    private static function test_methPsalmParam($mlpFanfic)
+    {
+        //         \/ should suggest: goreAmount, name, author
+        $mlpFanfic[''];
+    }
+
+    /**
+     * @return array{error: string} | array{
+     *     id: number,
+     *     name: string,
+     *     kind: 'cat' | 'dog' | 'fox' | 'hedgehog',
+     * }
+     */
+    private static function _retrieveBlockchainCutie()
+    {
+        if (rand() < 0.2) {
+            return ['error' => 'you are not lucky'];
+        } else {
+            $url = 'https://blockchaincuties.com/pet/t132998';
+            return json_decode(file_get_contents($url), true);
+        }
+    }
+
+    private static function test_psalmReturnType()
+    {
+        $cutie = self::_retrieveBlockchainCutie();
+        //     \/ should suggest: error, id, name, kind
+        $cutie[''];
+    }
+
+    // following not implemented yet
+
+    /** @param FileMapType $fileMap */
+    private static function test_psalmImportType($fileMap)
+    {
+        //       \/ TODO should suggest: 0, 1, 2
+        $fileMap[''];
+        //          \/ TODO should suggest: 0, 1
+        $fileMap[0][''];
+        //          \/ TODO should suggest: 0, 1
+        $fileMap[1][''];
+        //          \/ TODO should suggest: 0, 1, 2
+        $fileMap[2][''];
+    }
 }
