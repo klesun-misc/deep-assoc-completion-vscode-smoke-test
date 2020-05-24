@@ -23,6 +23,15 @@ function test_shapeDoc($pony) {
 \DeepTest\TestData::makeStudentRecord()[''];
 
 /**
+ * @psalm-type Blogger = array{name: string, subscribers: int, team: BloggerTeam}
+ * @psalm-type BloggerTeam = array{
+ *     name: string,
+ *     basis: 'non-profit' | 'commercial',
+ *     members: Blogger[],
+ * }
+ */
+
+/**
  * @psalm-import-type  FileMapType from \Psalm\Internal\Codebase\Analyzer
  *
  * \/ should suggest: psalm-type, psalm-import-type
@@ -111,6 +120,32 @@ class UnitTest
         $cutie = self::_retrieveBlockchainCutie();
         //     \/ should suggest: error, id, name, kind
         $cutie[''];
+    }
+
+    /**
+     * @param Blogger $blogger
+     * @param Blogger[] $bloggers
+     * @param array<string, Blogger> $nameToBlogger
+     * @param array{host: Blogger, guest: Blogger} $featRecord
+     * @param array{error: string}|Blogger $bestBlogger
+     * @param BloggerTeam $team
+     */
+    private static function test_psalmTypeAlias($blogger, $bloggers, $nameToBlogger, $featRecord, $bestBlogger, $team)
+    {
+        //       \/ should suggest: name, subscribers, team
+        $blogger[''];
+        //                      \/ should suggest: name, subscribers, team
+        $nameToBlogger['vasya'][''];
+        //                  \/ should suggest: name, subscribers, team
+        $featRecord['host'][''];
+        //           \/ should suggest: name, subscribers, team
+        $bloggers[0][''];
+        //           \/ should suggest: error, name, subscribers, team
+        $bestBlogger[''];
+        //    \/ should suggest: name, basis, members
+        $team[''];
+        //                  \/ should suggest: name, subscribers, team
+        $team['members'][0][''];
     }
 
     // following not implemented yet
