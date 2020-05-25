@@ -153,13 +153,14 @@ class UnitTest
     /** @param FileMapType $fileMap */
     private static function test_psalmImportType($fileMap)
     {
-        //       \/ TODO should suggest: 0, 1, 2
+        //       \/ should suggest: 0, 1, 2
         $fileMap[''];
-        //          \/ TODO should suggest: 0, 1
-        $fileMap[0][''];
-        //          \/ TODO should suggest: 0, 1
-        $fileMap[1][''];
-        //          \/ TODO should suggest: 0, 1, 2
-        $fileMap[2][''];
+        //                  \/ should suggest: 0, 1, 2
+        $fileMap[2][rand()][''];
+
+        //                  \/ TODO should suggest: 0, 1
+        $fileMap[0][rand()][''];
+        //                  \/ TODO should suggest: 0, 1
+        $fileMap[1][rand()][''];
     }
 }
