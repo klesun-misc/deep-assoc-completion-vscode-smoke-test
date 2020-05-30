@@ -43,6 +43,7 @@ function playSong($song) {
 
 /**
  * @psalm-import-type  FileMapType from \Psalm\Internal\Codebase\Analyzer
+ * @psalm-import-type  ImportPnrResult from \PsalmRbs\ImportPnr
  *
  * \/ should suggest: psalm-type, psalm-import-type
  * @
@@ -170,6 +171,43 @@ class UnitTest
         $fileMap[0][rand()][''];
         //                  \/ should suggest: 0, 1
         $fileMap[1][rand()][''];
+    }
+
+    /** @param ImportPnrResult $argImported */
+    private static function test_psalmImportInImport($argImported)
+    {
+        $imported = (new \PsalmRbs\ImportPnr())->execute();
+        //        \/ should suggest: status, pnrFields
+        $imported[''];
+        //                     \/ should suggest: reservation, pricingStores
+        $imported['pnrFields'][''];
+        //                                    \/ should suggest: passengers, itinerary
+        $imported['pnrFields']['reservation'][''];
+        //                                                     \/ should suggest: lastName, firstName, srcDividedBooking
+        $imported['pnrFields']['reservation']['passengers'][0][''];
+        //                                                                          \/ should suggest: status, pnrFields
+        $imported['pnrFields']['reservation']['passengers'][0]['srcDividedBooking'][''];
+        //                                                    \/ should suggest: airline, departurePt, departureDt, arrivalPt, arrivalDt
+        $imported['pnrFields']['reservation']['itinerary'][0][''];
+
+        //           \/ should suggest: status, pnrFields
+        $argImported[''];
+        //                        \/ should suggest: reservation, pricingStores
+        $argImported['pnrFields'][''];
+        //                                       \/ should suggest: passengers, itinerary
+        $argImported['pnrFields']['reservation'][''];
+        //                                                        \/ should suggest: lastName, firstName, srcDividedBooking
+        $argImported['pnrFields']['reservation']['passengers'][0][''];
+        //                                                                             \/ should suggest: status, pnrFields
+        $argImported['pnrFields']['reservation']['passengers'][0]['srcDividedBooking'][''];
+        //                                                       \/ should suggest: airline, departurePt, departureDt, arrivalPt, arrivalDt
+        $argImported['pnrFields']['reservation']['itinerary'][0][''];
+        //                                                 \/ should suggest: pricingModifiers, storeNumber, ptcBlocks
+        $argImported['pnrFields']['pricingStores'][rand()][''];
+        //                                                                      \/ should suggest: ptc, quantity, baseFare, netPrice
+        $argImported['pnrFields']['pricingStores'][rand()]['ptcBlocks'][rand()][''];
+        //                                                                                  \/ should suggest: currency, amount
+        $argImported['pnrFields']['pricingStores'][rand()]['ptcBlocks'][rand()]['netPrice'][''];
     }
 
     // following not implemented yet
