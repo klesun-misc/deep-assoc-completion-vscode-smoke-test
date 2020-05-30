@@ -23,6 +23,16 @@ function test_shapeDoc($pony) {
 \DeepTest\TestData::makeStudentRecord()[''];
 
 /**
+ * @psalm-import-type SweetDreamsSong from \Psalm\Internal\Codebase\SweetDreams
+ */
+
+/** @param SweetDreamsSong $song */
+function playSong($song) {
+    //    \/ should suggest: lyrics, length, artists
+    $song[''];
+}
+
+/**
  * @psalm-type Blogger = array{name: string, subscribers: int, team: BloggerTeam}
  * @psalm-type BloggerTeam = array{
  *     name: string,
@@ -148,8 +158,6 @@ class UnitTest
         $team['members'][0][''];
     }
 
-    // following not implemented yet
-
     /** @param FileMapType $fileMap */
     private static function test_psalmImportType($fileMap)
     {
@@ -158,9 +166,11 @@ class UnitTest
         //                  \/ should suggest: 0, 1, 2
         $fileMap[2][rand()][''];
 
-        //                  \/ TODO should suggest: 0, 1
+        //                  \/ should suggest: 0, 1
         $fileMap[0][rand()][''];
-        //                  \/ TODO should suggest: 0, 1
+        //                  \/ should suggest: 0, 1
         $fileMap[1][rand()][''];
     }
+
+    // following not implemented yet
 }

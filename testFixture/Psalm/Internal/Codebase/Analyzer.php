@@ -19,7 +19,3 @@ namespace Psalm\Internal\Codebase;
 class Analyzer
 {
 }
-
-class SweetDreams
-{
-}
