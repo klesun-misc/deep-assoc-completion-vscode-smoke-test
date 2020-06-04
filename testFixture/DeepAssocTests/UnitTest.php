@@ -210,5 +210,75 @@ class UnitTest
         $argImported['pnrFields']['pricingStores'][rand()]['ptcBlocks'][rand()]['netPrice'][''];
     }
 
+    public static function provideTestKeyKeyAccess()
+    {
+        $list = [];
+
+        $record = TestData::makeStudentRecord();
+        //              \/ should suggest: birthDate, birthCountry, passCode, expirationDate, family
+        $record['pass'][''];
+        $list[] = [$record['pass'], [
+            'birthDate' => [], 'birthCountry' => [],
+            'passCode' => [], 'expirationDate' => [], 'family' => [],
+        ]];
+        $family = $record['pass']['family'];
+        //      \/ should suggest: spouse, children
+        $family[''];
+        $list[] = [$family, ['spouse' => [], 'children' => []]];
+
+        return $list;
+    }
+
+    private static function testEqualsStringValues()
+    {
+        if (rand() % 1) {
+            $type = 'DOCO';
+        } elseif (rand() % 1) {
+            $type = 'DOCA';
+        } elseif (rand() % 1) {
+            $type = 'DOCS';
+        } elseif (rand() % 1) {
+            $type = 'FQTV';
+        }
+        //            \/ should suggest: DOCO, DOCA, DOCS, FQTV
+        if ($type === '') {
+
+        }
+        //            \/ should suggest: DOCO, DOCA, DOCS, FQTV
+        if ($type !== '') {
+
+        }
+        $arr = ['asd' => 'lol'];
+        //              \/ should suggest: lol
+        $arr['asd'] === '';
+    }
+
+    public static function provideTestScopes()
+    {
+        $list = [];
+
+        $denya = TestData::makeStudentRecord();
+        if (rand() > 0.5) {
+            $denya = ['randomDenya' => -100];
+            // should suggest _only_ randomDenya
+            $list[] = [$denya, ['randomDenya' => []]];
+        } elseif (rand() > 0.5) {
+            $denya = ['randomDenya2' => -100];
+            // should suggest _only_ randomDenya2
+            $list[] = [$denya, ['randomDenya2' => []]];
+        }
+        // all keys from makeRecord(),
+        // 'randomDenya' and 'randomDenya2'
+        //     \/ should suggest: id, randomDenya, randomDenya2, thisKeyBetterNotBeSuggested, firstName, lastName, year, faculty, pass, chosenSubSubjects
+        $denya[''];
+        $list[] = [$denya, TestData::makeStudentRecord()];
+        $list[] = [$denya, ['randomDenya' => [], 'randomDenya2' => []]];
+
+        $denya = ['thisKeyBetterNotBeSuggested' => 1414];
+
+
+        return $list;
+    }
+
     // following not implemented yet
 }

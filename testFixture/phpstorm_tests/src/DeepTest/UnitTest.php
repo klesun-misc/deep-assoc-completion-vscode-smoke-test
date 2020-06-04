@@ -27,32 +27,6 @@ class UnitTest implements IProcessPntQueueAction /** extends \PHPUnit_Framework_
         return $list;
     }
 
-    public static function provideTestScopes()
-    {
-        $list = [];
-
-        $denya = TestData::makeStudentRecord();
-        if (rand() > 0.5) {
-            $denya = ['randomDenya' => -100];
-            // should suggest _only_ randomDenya
-            $list[] = [$denya, ['randomDenya' => []]];
-        } elseif (rand() > 0.5) {
-            $denya = ['randomDenya2' => -100];
-            // should suggest _only_ randomDenya2
-            $list[] = [$denya, ['randomDenya2' => []]];
-        }
-        // should suggest all keys from makeRecord(),
-        // 'randomDenya' and 'randomDenya2'
-        // (preferably highlighted in different collors)
-        $list[] = [$denya, TestData::makeStudentRecord()];
-        $list[] = [$denya, ['randomDenya' => [], 'randomDenya2' => []]];
-
-        $denya = ['thisKeyWillNotBeSuggested' => 1414];
-
-
-        return $list;
-    }
-
     public static function provideTestElseIfAssignment()
     {
         $list = [];
@@ -72,6 +46,7 @@ class UnitTest implements IProcessPntQueueAction /** extends \PHPUnit_Framework_
             $list[] = [$res, ['d' => []]];
         }
         // should suggest a,b,c.d
+        $res[''];
         $list[] = [$res, ['a' => [], 'b' => [], 'roro' => [], 'c' => [], 'd' => []]];
 
         return $list;
@@ -100,24 +75,6 @@ class UnitTest implements IProcessPntQueueAction /** extends \PHPUnit_Framework_
             'initialKey' => [], 'initialKey2' => [],
             'dynamicKey1' => [], 'dynamicKey2' => []]
         ];
-
-        return $list;
-    }
-
-    public static function provideTestKeyKeyAccess()
-    {
-        $list = [];
-
-        $record = TestData::makeStudentRecord();
-        // should suggest birthDate, birthCountry,
-        // passCode, expirationDate, family
-        $list[] = [$record['pass'], [
-            'birthDate' => [], 'birthCountry' => [],
-            'passCode' => [], 'expirationDate' => [], 'family' => [],
-        ]];
-        $family = $record['pass']['family'];
-        // should suggest spouse, children
-        $list[] = [$family, ['spouse' => [], 'children' => []]];
 
         return $list;
     }
