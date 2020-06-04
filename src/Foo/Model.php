@@ -4,16 +4,20 @@ use InvalidArgumentException;
 
 /**
  * @psalm-type Product = array{id:int, name:string, ololo: float}
+ * 
+ * a workaround for psalm to not report types declared in phpstan-specific way as errors
+ * @psalm-type PhpstanSomePurchase = mixed
+ * @psalm-type PhpstanPurchaseList = mixed
  */
 
 class Model {
 	/**
-	 * @param SomePurchase $data
+	 * @param PhpstanSomePurchase $data
 	 */
 	static public function doSomethingPhpstan(array $data): void {
 	}
 
-	/** @param PurchaseList $purchaseList */
+	/** @param PhpstanPurchaseList $purchaseList */
 	static public function processPurchaseList(array $purchaseList): void {
 		$name = $purchaseList['']; // should suggest: customerName, items, lastUpdateDt
 	}
