@@ -19,7 +19,7 @@ function test_shapeDoc($pony) {
     $pony[''];
 }
 
-//                                      \/ should suggest: id, firstName, lastName, year, faculty, pass, chosenSubSubjects
+//                                      \/ should suggest: friends, id, firstName, lastName, year, faculty, pass, chosenSubSubjects
 \DeepTest\TestData::makeStudentRecord()[''];
 
 /**
@@ -57,7 +57,7 @@ class UnitTest
         $list = [];
 
         // from function
-        //                            \/ should suggest: id, firstName, lastName, year, faculty, pass, chosenSubSubjects
+        //                            \/ should suggest: friends, id, firstName, lastName, year, faculty, pass, chosenSubSubjects
         TestData::makeStudentRecord()[''];
         $list[] = [
             TestData::makeStudentRecord(),
@@ -66,12 +66,84 @@ class UnitTest
 
         // from var
         $denya = TestData::makeStudentRecord();
-        //     \/ should suggest: id, firstName, lastName, year, faculty, pass, chosenSubSubjects
+        //     \/ should suggest: friends, id, firstName, lastName, year, faculty, pass, chosenSubSubjects
         $denya[''];
         $list[] = [
             $denya,
             ['id' => [], 'firstName' => [], 'lastName' => [], 'year' => [], 'faculty' => [], 'chosenSubSubjects' => []],
         ];
+
+       // from inner key
+        //                   \/ should suggest: name, occupation
+        $denya['friends'][0][''];
+        $list[] = [
+            $denya['friends'][0],
+            ['name' => [], 'occupation' => []],
+        ];
+
+        return $list;
+    }
+
+    public static function provideTestArrayAppendInference()
+    {
+        $list = [];
+
+        $records = [];
+
+        for ($i = 0; $i < 10; ++$i) {
+            $records[] = [
+                'id' => $i,
+                'randomValue' => rand(),
+                'origin' => 'here',
+            ];
+        }
+
+        //          \/ should suggest: id, randomValue, origin
+        $records[0][''];
+        $list[] = [$records[0], ['id' => [], 'randomValue' => [], 'origin' => []]];
+
+        $mugiwaras = [];
+        $mugiwaras['sanji']['cooking'] = 'good';
+        //                  \/ should suggest: cooking
+        $mugiwaras['sanji'][''];
+        $list[] = [$mugiwaras['sanji'], ['cooking' => []]];
+
+        $lala = [];
+        $lala[0]['asdas'][] = [
+            'id' => -100,
+            'randomValue' => rand(),
+            'origin' => 'there',
+            'originData' => [1,2,3],
+        ];
+        $lala['0']['asdas'][0][''];
+        $lolo = $lala;
+        // should suggest asdas
+        //       \/ should suggest: asdas
+        $lolo[0][''];
+        $list[] = [$lolo[0], ['asdas' => []]];
+        //                   \/ should suggest: id, randomValue, origin, originData
+        $lolo[0]['asdas'][4][''];
+        $list[] = [$lolo[0]['asdas'][4], [
+            'id' => [], 'randomValue' => [],
+            'origin' => [], 'originData' => [],
+        ]];
+
+        return $list;
+    }
+
+    public static function provideTestNullKeyAccess()
+    {
+        $list = [];
+
+        $record = [
+            'a' => 5,
+            'b' => null,
+            'c' => null,
+            'd' => 7,
+        ];
+        //      \/ should suggest: a, b, c, d
+        $record[''];
+        $list[] = [$record, ['a' => [], 'b' => [], 'c' => [], 'd' => []]];
 
         return $list;
     }
@@ -269,7 +341,7 @@ class UnitTest
         }
         // all keys from makeRecord(),
         // 'randomDenya' and 'randomDenya2'
-        //     \/ should suggest: id, randomDenya, randomDenya2, thisKeyBetterNotBeSuggested, firstName, lastName, year, faculty, pass, chosenSubSubjects
+        //     \/ should suggest: friends, id, randomDenya, randomDenya2, thisKeyBetterNotBeSuggested, firstName, lastName, year, faculty, pass, chosenSubSubjects
         $denya[''];
         $list[] = [$denya, TestData::makeStudentRecord()];
         $list[] = [$denya, ['randomDenya' => [], 'randomDenya2' => []]];
@@ -280,5 +352,129 @@ class UnitTest
         return $list;
     }
 
+    public static function provideTestElseIfAssignment()
+    {
+        $list = [];
+
+        if ($res = ['a' => 1]) {
+            // should suggest only a
+            $list[] = [$res, ['a' => []]];
+        } elseif ($res = ['b' => 2]) {
+            $res['roro'] = 'asdasd';
+            // should suggest only b and asdasd
+            $list[] = [$res, ['b' => [], 'roro' => []]];
+        } elseif ($res = ['c' => 3]) {
+            // should suggest only c
+            $list[] = [$res, ['c' => []]];
+        } else if ($res = ['d' => 4]) {
+            // should suggest only d
+            $list[] = [$res, ['d' => []]];
+        }
+        //   \/ should suggest: a, b, c, d, roro
+        $res[''];
+        $list[] = [$res, ['a' => [], 'b' => [], 'roro' => [], 'c' => [], 'd' => []]];
+
+        return $list;
+    }
+
+    public static function test_keyChainAssignment()
+    {
+        $tree = [];
+        $tree['lvl1']['lvl2']['lvl3'][] = [
+            'name' => 'Black',
+            'game' => 'Skyrim',
+            'episodes' => 224,
+        ];
+        //    \/ should suggest: lvl1
+        $tree[''];
+        //            \/ should suggest: lvl2
+        $tree['lvl1'][''];
+        //                    \/ should suggest: lvl3
+        $tree['lvl1']['lvl2'][''];
+        //                           \/ should suggest: 0, 1, 2, 3, 4
+        $tree['lvl1']['lvl2']['lvl3'][];
+        //                               \/ should suggest: name, game, episodes
+        $tree['lvl1']['lvl2']['lvl3'][0][''];
+    }
+
+    public static function provideTestKeyAssignment()
+    {
+        $list = [];
+
+        $record = ['initialKey' => 123];
+        if (rand() > 0.5) {
+            $record = ['initialKey2' => 123];
+            if (rand(0.5) > 0.5) {
+                $record['dynamicKey1'] = 234;
+            }
+        } else {
+            if (rand(0.5) > 0.5) {
+                $record['dynamicKey2'] = 345;
+                // must not contain dynamicKey1 and initialKey2
+                $list[] = [$record, ['initialKey' => [], 'dynamicKey2' => []]];
+            }
+        }
+
+        //      \/ should suggest: dynamicKey1, dynamicKey2, initialKey, initialKey2
+        $record[''];
+        $list[] = [$record, [
+            'initialKey' => [], 'initialKey2' => [],
+            'dynamicKey1' => [], 'dynamicKey2' => []]
+        ];
+
+        return $list;
+    }
+
+    public static function provideTupleDirectAccess()
+    {
+        $list = [];
+
+        $simpleTuple = [
+            ['a' => 5, 'b' => 6],
+            ['a' => 5, 'c' => 6],
+            'huj' => 'asd',
+        ];
+        //           \/ should suggest: 0, huj, 1
+        $simpleTuple[''];
+        $list[] = [$simpleTuple, ['0' => [], '1' => [], 'huj']];
+        //              \/ should suggest: a, b
+        $simpleTuple[0][''];
+        $list[] = [$simpleTuple['0'], ['a' => [], 'b' => []]];
+        //              \/ should suggest: a, c
+        $simpleTuple[1][''];
+        $list[] = [$simpleTuple[1], ['a' => [], 'c' => []]];
+
+        return $list;
+    }
+
     // following not implemented yet
+
+    public static function provideTuples()
+    {
+        $list = [];
+
+        $musician = ['genre' => 'jass', 'instrument' => 'trumpet'];
+        $programmer = ['language' => 'C#', 'orientation' => 'backend'];
+        $teacher = ['subject' => 'history', 'students' => 98];
+
+        $tuple = [$musician, $programmer, $teacher];
+        //        \/ should suggest genre, instrument
+        $tuple[0][''];
+        $list[] = [$tuple['0'], ['genre' => [], 'instrument' => []]];
+        //        \/ should suggest: language, orientation
+        $tuple[1][''];
+        $list[] = [$tuple['1'], ['language' => [], 'orientation' => []]];
+        //        \/ should suggest: subject, students
+        $tuple[2][''];
+        $list[] = [$tuple['2'], ['subject' => [], 'students' => []]];
+
+        list($mus, $prog, $tea) = $tuple;
+        // TODO should suggest what should be suggested
+        $mus[''];
+        $list[] = [$mus, ['genre' => [], 'instrument' => []]];
+        $list[] = [$prog, ['language' => [], 'orientation' => []]];
+        $list[] = [$tea, ['subject' => [], 'students' => []]];
+
+        return $list;
+    }
 }
