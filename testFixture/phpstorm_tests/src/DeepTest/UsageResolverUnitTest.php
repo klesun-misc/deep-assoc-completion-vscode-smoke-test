@@ -273,6 +273,26 @@ class UsageResolverUnitTest implements IUsageBase
         ];
     }
 
+    public function provide_plusAssignment($param1)
+    {
+        $base = [
+            'solo' => 'solo suki',
+            'sosatj' => 'raki',
+        ];
+        $base += $param1;
+        $base += [
+            '' => true, // should suggest: solo, sosatj
+        ];
+        return [
+            'param1' => [
+                // not testable because += completion is only enabled
+                // for actual caret placement to avoid performance issue
+                // 'solo' => 'solo suki',
+                // 'sosatj' => 'raki',
+            ],
+        ];
+    }
+
     private static function transformAvailabilityParams($params)
     {
         return [
