@@ -2429,6 +2429,29 @@ class ExactKeysUnitTest extends AbstractExactKeysUnitTest implements IExactKeysU
         ];
     }
 
+    /**
+     * @param string $name
+     * @param array $specs {
+     *     @type array $allowed ololo
+     *     @type array $disallowed trololo
+     *     @type array $translated alalala
+     *     @type array $nested tralala
+     * }
+     */
+    public function provide_plusAssignment(string $name, array $specs)
+    {
+        $specs += [
+            'translated' => [],
+            'nested' => [],
+            'fixed' => [],
+            'model_mapping' => [],
+        ];
+        $specs[];
+        return [
+            [$specs, ['allowed', 'disallowed', 'translated', 'nested', 'fixed', 'model_mapping']],
+        ];
+    }
+
     //=============================
     // following are not implemented yet
     //=============================
