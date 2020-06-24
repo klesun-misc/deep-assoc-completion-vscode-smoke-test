@@ -615,6 +615,40 @@ class DeepKeysTest
         ];
     }
 
+    private static function test_subKeyPushAssignment()
+    {
+        /**
+         * @var array<int, array{tag: string, translated: boolean, nested: boolean, lang: string, mapping: string}> $definitions
+         */
+        $definitions = [];
+
+        $definitions[] = [
+            ''
+        ];
+    }
+
+    private static function test_subKeyAssignment()
+    {
+        /** @var array $test['TL_DCA'] = [
+         *     string => [
+         *          'config' => [
+         *              'notSortable' => bool, //test
+         *          ],
+         *          'fields' => [
+         *              string => [
+         *                  'label' => array
+         *              ]
+         *         ]
+         *      ],
+         * ] */
+
+        $test['TL_DCA']['tl_test']['config']['notSortable']; //completion works like a charm
+
+        $test['TL_DCA']['tl_test']['config'] = [
+            '' //no completion here
+        ];
+    }
+
     //============================
     // not implemented follow
     //============================

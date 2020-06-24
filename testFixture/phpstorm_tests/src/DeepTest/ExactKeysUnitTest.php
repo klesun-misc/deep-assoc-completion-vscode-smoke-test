@@ -2408,6 +2408,27 @@ class ExactKeysUnitTest extends AbstractExactKeysUnitTest implements IExactKeysU
         ];
     }
 
+    /**
+     * @param array  $specs Specifications for parsing.
+     *
+     * @psalm-param array{
+     *     allowed:    string[],                 // Comment allowed
+     *     allowed2:   array<array-key, string>, // Comment allowed2
+     *     model:      callable(string, string=, string...):string, // Comment model
+     *     model2:     Closure(string, string=, string...): array{vasya: 1, petya: 2}, // Comment model2
+     *     test?: string, // Optional
+     * } $specs
+     *
+     */
+    public function provide_psalmFuncType($specs)
+    {
+        $specs['']()[''];
+        return [
+            [$specs, ['allowed', 'allowed2', 'model', 'model2', 'test']],
+            [$specs['model2'](), ['vasya', 'petya']],
+        ];
+    }
+
     //=============================
     // following are not implemented yet
     //=============================
