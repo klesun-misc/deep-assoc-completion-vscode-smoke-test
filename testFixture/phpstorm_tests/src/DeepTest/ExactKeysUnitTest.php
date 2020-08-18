@@ -69,6 +69,25 @@ abstract class AbstractExactKeysUnitTest
 }
 
 /**
+ * @propert array  $specs Specification for parsing. All are optional.
+ *
+ * @psalm-property array {
+ *     allowed:    string[],                 // Comment allowed
+ *     allowed2:   array<array-key, string>, // Comment allowed2
+ *     model:      callable(string, string=, string...): string, // Comment model
+ *     model2:     Closure(string, string=, string...): string, // Comment model2
+ *     test?: string, // Optonal
+ * } $specs
+ */
+class TestB {
+    public function psalm_test2(): void
+    {
+        $this->specs[''];
+        return $this->specs;
+    }
+}
+
+/**
  * unlike UnitTest.php, this test not just checks that actual result  has _at least_
  * such keys, but it tests that it has _exactly_ such keys, without extras
  *
@@ -2423,6 +2442,56 @@ class ExactKeysUnitTest extends AbstractExactKeysUnitTest implements IExactKeysU
         $ifc->getPsalmReturnData()[''];
         return [
             [$ifc->getPsalmReturnData(), ['huj']],
+
+    /**
+     * @param array  $specs Specifications for parsing.
+     *
+     * @psalm-param array{
+     *     allowed:    string[],                 // Comment allowed
+     *     allowed2:   array<array-key, string>, // Comment allowed2
+     *     model:      callable(string, string=, string...):string, // Comment model
+     *     model2:     Closure(string, string=, string...): array{vasya: 1, petya: 2}, // Comment model2
+     *     test?: string, // Optional
+     * } $specs
+     *
+     */
+    public function provide_psalmFuncType($specs)
+    {
+        $specs['']()[''];
+        return [
+            [$specs, ['allowed', 'allowed2', 'model', 'model2', 'test']],
+            [$specs['model2'](), ['vasya', 'petya']],
+        ];
+    }
+
+    /**
+     * @param string $name
+     * @param array $specs {
+     *     @type array $allowed ololo
+     *     @type array $disallowed trololo
+     *     @type array $translated alalala
+     *     @type array $nested tralala
+     * }
+     */
+    public function provide_plusAssignment(string $name, array $specs)
+    {
+        $specs += [
+            'translated' => [],
+            'nested' => [],
+            'fixed' => [],
+            'model_mapping' => [],
+        ];
+        $specs[];
+        return [
+            [$specs, ['allowed', 'disallowed', 'translated', 'nested', 'fixed', 'model_mapping']],
+        ];
+    }
+
+    public function provide_psalmPropertyPhpdoc()
+    {
+        (new TestB)->psalm_test2()[''];
+        return [
+            [(new TestB)->psalm_test2(), ['allowed', 'allowed2', 'model', 'model2', 'test']]
         ];
     }
 
