@@ -2442,6 +2442,8 @@ class ExactKeysUnitTest extends AbstractExactKeysUnitTest implements IExactKeysU
         $ifc->getPsalmReturnData()[''];
         return [
             [$ifc->getPsalmReturnData(), ['huj']],
+        ];
+    }
 
     /**
      * @param array  $specs Specifications for parsing.
