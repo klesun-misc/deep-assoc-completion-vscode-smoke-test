@@ -12,3 +12,6 @@ var makeCustomer = () => {
         ],
     }
 };
+
+const f = a => a;
+f({zhopa: 123}).z;

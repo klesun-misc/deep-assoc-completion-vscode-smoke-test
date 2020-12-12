@@ -992,7 +992,8 @@ class UsageResolverUnitTest implements IUsageBase
 
     public static function provide_returnDocObjectVars($param)
     {
-        self::getReturnDocObjectVars($param);
+        $result = self::getReturnDocObjectVars($param);
+        $result[''];
         self::getReturnDocObjectVars(['' => 123]);
         return [
             'param' => [

@@ -69,7 +69,7 @@ abstract class AbstractExactKeysUnitTest
 }
 
 /**
- * @propert array  $specs Specification for parsing. All are optional.
+ * @property array  $specs Specification for parsing. All are optional.
  *
  * @psalm-property array {
  *     allowed:    string[],                 // Comment allowed
