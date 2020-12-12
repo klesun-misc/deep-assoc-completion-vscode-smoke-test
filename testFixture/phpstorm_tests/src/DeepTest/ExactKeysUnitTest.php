@@ -2427,6 +2427,22 @@ class ExactKeysUnitTest extends AbstractExactKeysUnitTest implements IExactKeysU
         ];
     }
 
+    /** @param \FormInterface<array{huj: 'pizda'}> $ifc */
+    public function provide_ifcClsGeneric($ifc)
+    {
+        $ifc->getData()[''];
+        return [
+            [$ifc->getData(), ['huj']],
+        ];
+    }
+
+    /** @param \FormInterface<array{huj: 'pizda'}> $ifc */
+    public function provide_psalmReturnDoc($ifc)
+    {
+        $ifc->getPsalmReturnData()[''];
+        return [
+            [$ifc->getPsalmReturnData(), ['huj']],
+
     /**
      * @param array  $specs Specifications for parsing.
      *
@@ -2485,6 +2501,7 @@ class ExactKeysUnitTest extends AbstractExactKeysUnitTest implements IExactKeysU
 
     public function provide_psalmFromArg()
     {
+
         $reimu = new ReimuHakurei();
         get_object_vars($reimu)[''];
 
