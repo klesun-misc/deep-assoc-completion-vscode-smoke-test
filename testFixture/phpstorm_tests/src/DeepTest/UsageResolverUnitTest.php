@@ -1077,6 +1077,38 @@ class UsageResolverUnitTest implements IUsageBase
         ];
     }
 
+    /** @psalm-param 'aaaa'|'bbbb' $field */
+    static function rororor($field)
+    {
+    }
+
+    public function provide_psalmStrAlternation($param1)
+    {
+        self::rororor('');
+        self::rororor($param1);
+        return [
+            'param1' => 'aaaa' ?: 'bbbb',
+        ];
+    }
+
+    /**
+     * @param $field =
+     *     'client-address' ?: // comment 1
+     *     'client-data' // comment 2
+     */
+    static function getClientField($field)
+    {
+    }
+
+    public function provide_alternationTrailingComment($param1)
+    {
+        self::getClientField('');
+        self::getClientField($param1);
+        return [
+            'param1' => 'client-address' ?: 'client-data',
+        ];
+    }
+
     //=========================
     // following not implemented yet
     //========================
